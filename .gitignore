@@ -1,0 +1,46 @@
+# client dependencies
+/client/node_modules
+/client/.pnp
+/client/.pnp.*
+/client/.yarn/*
+!/client/.yarn/patches
+!/client/.yarn/plugins
+!/client/.yarn/releases
+!/client/.yarn/versions
+
+# client testing
+/client/coverage
+
+# client Next.js
+/client/.next/
+/client/out/
+
+# client production
+/client/build
+
+# client miscellaneous
+/client/.DS_Store
+/client/*.pem
+
+# client debug
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+/client/.pnpm-debug.log*
+
+# client environment files
+/client/.env*
+
+# client Vercel
+/client/.vercel
+
+# client TypeScript
+/client/*.tsbuildinfo
+/client/next-env.d.ts
+
+
+
+
+server/node_modules
+server/dist
+server/.env
