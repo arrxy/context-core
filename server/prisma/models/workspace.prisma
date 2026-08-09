@@ -5,7 +5,9 @@ model Workspace {
   title         String?
   description   String?
   defaultModel  String?   @default("gpt-4o-mini")
+  recordStatus  Int?      @default(1)
   createdAt     DateTime  @default(now())
+  deletedAt     DateTime?
   updatedAt     DateTime  @updatedAt
 
   @@index([userId])
