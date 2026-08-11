@@ -1,0 +1,53 @@
+enum SourceType {
+    PDF
+    WEBSITE
+    YOUTUBE
+    TEXT
+    MARKDOWN
+}
+
+enum SourceStatus {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+}
+
+model Source {
+    id String @id @default(cuid())
+    workspaceId String
+    workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+    type SourceType
+    title String?
+    description String?
+    content String?
+    url String? @unique
+    status SourceStatus @default(PENDING)
+    metadata Json?
+    createdAt DateTime @default(now())
+    deletedAt DateTime?
+    updatedAt DateTime @updatedAt
+    chunks SourceChunk[]
+
+    @@index([workspaceId])
+    @@index([workspaceId, type])
+    @@index([workspaceId, status])
+    @@map("source")
+}
+
+model SourceChunk {
+    id String @id @default(cuid())
+    sourceId String
+    source Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+    index Int
+    tokenCount Int
+    metadata Json?
+    content String
+    createdAt DateTime @default(now())
+    deletedAt DateTime?
+    updatedAt DateTime @updatedAt
+
+    @@index([sourceId])
+    @@index([sourceId, index])
+    @@map("source_chunk")
+}
