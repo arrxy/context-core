@@ -13,5 +13,10 @@ export const updateWorkspaceSchema = createWorkspaceSchema.partial().refine(
     { message: "At least one field is required" }
 );
 
+export const workspaceIdParamSchema = z.object({
+    workspaceId: z.cuid2("Invalid workspace ID"),
+});
+
 export type CreateWorkspaceSchema = z.infer<typeof createWorkspaceSchema>;
 export type UpdateWorkspaceSchema = z.infer<typeof updateWorkspaceSchema>;
+export type WorkspaceIdParamSchema = z.infer<typeof workspaceIdParamSchema>;

@@ -24,21 +24,21 @@ export type WorkspaceRecord = {
 
 export const findWorkspaceByUserId = async (userId: string) => {
     return await prisma.workspace.findMany({
-        where: { userId },
+        where: { userId, recordStatus: 1 },
         select: WorkspaceSelect,
     }) as WorkspaceRecord[];
 };
 
 export const findWorkspaceById = async (id: string) => {
     return await prisma.workspace.findUnique({
-        where: { id },
+        where: { id, recordStatus: 1 },
         select: WorkspaceSelect,
     }) as WorkspaceRecord | null;
 };
 
 export const findWorkspaceByIdandUserId = async (workspaceId: string, userId: string) => {
     return await prisma.workspace.findUnique({
-        where: { id: workspaceId, userId },
+        where: { id: workspaceId, userId, recordStatus: 1 },
         select: WorkspaceSelect,
     }) as WorkspaceRecord | null;
 };
@@ -53,24 +53,24 @@ export const createWorkspaceRecord = async (userId: string, data: CreateWorkspac
     });
 };
 
-export const updateWorkspaceRecord = async (workspaceId: string, data: UpdateWorkspaceSchema) => {
+export const updateWorkspaceRecord = async (userId: string, workspaceId: string, data: UpdateWorkspaceSchema) => {
     return await prisma.workspace.update({
-        where: { id: workspaceId },
+        where: { id: workspaceId, userId, recordStatus: 1 },
         data: omitUndefined(data),
         select: WorkspaceSelect,
     });
 };
 
-export const deleteWorkspaceRecord = async (workspaceId: string) => {
+export const deleteWorkspaceRecord = async (userId: string, workspaceId: string) => {
     return await prisma.workspace.update({
-        where: { id: workspaceId },
+        where: { id: workspaceId, userId, recordStatus: 1 },
         data: { recordStatus: 0, deletedAt: new Date() },
     });
 };
 
-export const restoreWorkspaceRecord = async (workspaceId: string) => {
+export const restoreWorkspaceRecord = async (userId: string, workspaceId: string) => {
     return await prisma.workspace.update({
-        where: { id: workspaceId },
+        where: { id: workspaceId, userId, recordStatus: 0 },
         data: { recordStatus: 1, deletedAt: null },
     });
 };
